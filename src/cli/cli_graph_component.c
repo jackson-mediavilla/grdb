@@ -3,6 +3,7 @@
 #include <errno.h>
 #endif
 #include <fcntl.h>
+#include <inttypes.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/stat.h>
@@ -140,7 +141,18 @@ cli_graph_component_sssp(char *cmdline, int *pos)
 	result = component_sssp(&c, v1, v2, &n, &total_weight, &path);
 	if (result < 0) {
 		/* Failure... */
+		printf("Failure to run sssp algorithm.\n");
+		return;
 	}
+
+	//print out results
+	printf("Total weight: %d\n", total_weight);
+	printf("Total number of vertices in the shortest path: %d\n", n);
+	printf("Shortest path: ");
+	for (int x = 0; x < n; x++) {
+		printf("%llu-> ", path[x]);
+	}
+	printf("%llu\n", path[n-1]);
 }
 
 void
